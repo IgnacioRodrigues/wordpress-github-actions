@@ -1,0 +1,16 @@
+{
+    "name": "irodrigues/wordpress-github-actions",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Ignacio Rodrigues",
+            "email": "irodrigues@makingsense.com"
+        }
+    ],
+    "require-dev": {
+        "wp-coding-standards/wpcs": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "wimg/php-compatibility": "*",
+        "squizlabs/php_codesniffer": "*"
+    }
+}
