@@ -1,33 +1,94 @@
-# This is a basic workflow to help you get started with Actions
+# .github/workflows/main.yml
 
-name: CI
+name: Production CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
+
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+    - master
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
+jobs:    
+
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - name: Checkout files and setup environment
+      uses: actions/checkout@v1
+    - name: Set up Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.15.3'
+    - name: Build plugins
+      run: composer update
+    - name: Build assets
+      run: npm install && npm run build
+    - name: Upload PHP
+      uses: actions/upload-artifact@v1
+      with:
+        name: php-build
+        path: vendor
+    - name: Upload assets
+      uses: actions/upload-artifact@v1
+      with:
+        name: js-build
+        path: assets
+    - if: success()
+      name: Send build success message
+      uses: jaygould/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Git message
+        SLACK_MESSAGE: The build process succeeded
+        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+    - if: failure()
+      name: Send build fail message
+      uses: jaygould/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Git message
+        SLACK_MESSAGE: The build process failed
+        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+        SLACK_COLOR: '#BE2625'
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Prepare for deployment
+      uses: actions/checkout@master
+    - name: Download PHP
+      uses: actions/download-artifact@v1
+      with:
+        name: php-build
+        path: vendor
+    - name: Download assets
+      uses: actions/download-artifact@v1
+      with:
+        name: js-build
+        path: assets
+    - name: Deploy website
+      uses: jaygould/FTP-Deploy-Action@2.0.0
+      env:
+        FTP_SERVER: ${{ secrets.FTP_HOST }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        REMOTE_DIR: public_html
+        ARGS: --only-newer --ignore-time --verbose
+    - if: success()
+      name: Send deployment success message
+      uses: jaygould/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Git message
+        SLACK_MESSAGE: The deployment process succeeded
+        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+    - if: failure()
+      name: Send deployment fail message
+      uses: jaygould/action-slack-notify@master
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Git message
+        SLACK_MESSAGE: The deployment process failed
+        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+        SLACK_COLOR: '#BE2625'
