@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "WordPress Theme",
   "scripts": {
-    "prod": "webpack --config webpack.prod.js --production",
+    "build": "webpack --config webpack.prod.js --production",
     "dev": "webpack --config webpack.dev.js --watch --development"
   },
   "contributors": [
