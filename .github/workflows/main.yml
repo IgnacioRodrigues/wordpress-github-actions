@@ -33,23 +33,23 @@ jobs:
       with:
         name: js-build
         path: assets
-    - if: success()
-      name: Send build success message
-      uses: jaygould/action-slack-notify@master
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_USERNAME: Git message
-        SLACK_MESSAGE: The build process succeeded
-        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
-    - if: failure()
-      name: Send build fail message
-      uses: jaygould/action-slack-notify@master
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_USERNAME: Git message
-        SLACK_MESSAGE: The build process failed
-        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
-        SLACK_COLOR: '#BE2625'
+    #- if: success()
+      #name: Send build success message
+      #uses: irodrigues/action-slack-notify@master
+      #env:
+        #SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        #SLACK_USERNAME: Git message
+        #SLACK_MESSAGE: The build process succeeded
+        #SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+    #- if: failure()
+      #name: Send build fail message
+      #uses: irodrigues/action-slack-notify@master
+      #env:
+        #SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        #SLACK_USERNAME: Git message
+        #SLACK_MESSAGE: The build process failed
+        #SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+        #SLACK_COLOR: '#BE2625'
 
   deploy:
     needs: [build]
@@ -68,27 +68,27 @@ jobs:
         name: js-build
         path: assets
     - name: Deploy website
-      uses: jaygould/FTP-Deploy-Action@2.0.0
+      uses: irodrigues/FTP-Deploy-Action@2.0.0
       env:
         FTP_SERVER: ${{ secrets.FTP_HOST }}
         FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         REMOTE_DIR: public_html
         ARGS: --only-newer --ignore-time --verbose
-    - if: success()
-      name: Send deployment success message
-      uses: jaygould/action-slack-notify@master
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_USERNAME: Git message
-        SLACK_MESSAGE: The deployment process succeeded
-        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
-    - if: failure()
-      name: Send deployment fail message
-      uses: jaygould/action-slack-notify@master
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_USERNAME: Git message
-        SLACK_MESSAGE: The deployment process failed
-        SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
-        SLACK_COLOR: '#BE2625'
+    #- if: success()
+      #name: Send deployment success message
+      #uses: jaygould/action-slack-notify@master
+      #env:
+        #SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        #SLACK_USERNAME: Git message
+        #SLACK_MESSAGE: The deployment process succeeded
+        #SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+    #- if: failure()
+      #name: Send deployment fail message
+      #uses: jaygould/action-slack-notify@master
+      #env:
+        #SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        #SLACK_USERNAME: Git message
+        #SLACK_MESSAGE: The deployment process failed
+        #SLACK_ICON: https://jaygould.co.uk/icons/icon-192x192.png
+        #SLACK_COLOR: '#BE2625'
