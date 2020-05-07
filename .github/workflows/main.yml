@@ -8,7 +8,7 @@ on:
     branches:
     - master
 
-jobs:    
+jobs:
 
   build:
     runs-on: ubuntu-latest
@@ -67,8 +67,8 @@ jobs:
       with:
         name: js-build
         path: assets
-    - name: Deploy website
-      uses: irodrigues/FTP-Deploy-Action@2.0.0
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@3.1.0
       env:
         FTP_SERVER: ${{ secrets.FTP_HOST }}
         FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
