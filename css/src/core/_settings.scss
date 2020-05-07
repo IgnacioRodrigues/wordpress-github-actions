@@ -1,0 +1,65 @@
+////
+/// Settings File
+/// Init fonts, backgrounds, wrappers, breakpoints and Transition variables
+/// @group Settings
+////
+$msuxf-font-size: 14px !default;
+$msuxf-font-weight: 400 !default;
+$msuxf-font-family: "proxima-nova", Arial, Helvetica, sans-serif !default;
+$msuxf-font: $msuxf-font-weight $msuxf-font-size $msuxf-font-family !default;
+$msuxf-font-weight-regular: $msuxf-font-weight !default;
+$msuxf-font-weight-bold: 800 !default;
+$msuxf-font-color: #525845 !default;
+$msuxf-font-color-bright: #edede6 !default;
+$msuxf-font-color-dark: $msuxf-font-color !default;
+$msuxf-font-color-white: #fff !default;
+$msuxf-background: $msuxf-font-color-bright !default;
+$msuxf-background-bright: $msuxf-background !default;
+$msuxf-wrapper-min-width: 1200px !default;
+$max-with-size: 1366px !default;
+$msuxf-breakpoints: (
+  'desktop-hd': (min-width: 1181px),
+  'desktop': (max-width: 1180px),
+  'tablet': (max-width: 768px),
+  'mobile': (max-width: 480px),
+  'only-desktop': (max-width: 1180px, min-width: 769px),
+  'only-tablet': (max-width: 768px, min-width: 481px),
+  'mobile-until-tablet': (max-width: 767px)
+)
+!default; //transitions Config
+$msuxf-transition-duration: 0.25s !default;
+$msuxf-transition-timing: ease !default; //Background Colors
+$bg-color-white: #FFFFFF; //Font Colors
+$color-green: #33AD73;
+$color-green-200: #727C5E;
+$color-green-hover: #008046;
+$color-white: #FFFFFF;
+$color-brown: #302100;
+$color-brown-hover: #594100;
+$color-yellow: #FCE579;
+$color-yellow-hover: #E7D26F;
+$color-yellow-gold: #FBB224;
+$color-pink: #83329D;
+$color-purple: #B58FC1;
+$color-purple-dark: #8B6597;
+$color-gray: #B4B1A5;
+$color-gray-100: #F2F1E9;
+$color-gray-200: #f5f5f5;
+$color-gray-300: #878787;
+$color-gray-400: #e2e2e2;
+$color-gray-500: #666666;
+$color-gray-600: #333333;
+$color-gray-700: #c6c5bd;
+$color-gray-800: #545454;
+$color-gray-disabled: #94988D;
+$color-black: #000;
+$color-red: #e34f45;
+$color-aquamarine: #A1E8C6;
+$color-violet: #C9A9D5;
+$color-violet-light: #C48AD5;
+$color-violet-dark: #8B6597;
+$color-violet-selection: #70467C;
+
+// Shadows
+$video-frame-shadow: 0px 0px 6px $color-gray-500;
+$speaker-image-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
